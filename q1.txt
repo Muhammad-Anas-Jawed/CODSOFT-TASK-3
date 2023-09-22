@@ -1,0 +1,47 @@
+1.	Create a class to represent the ATM machine. 
+INPUT:
+public class ATM {
+    private double balance;
+
+    public ATM(double initialBalance) {
+        balance = initialBalance;
+    }
+
+    public double checkBalance() {
+        return balance;
+    }
+
+    public String deposit(double Amount) {
+        if (Amount > 0) {
+            balance += Amount;
+            return "Deposited $" + Amount + ". New balance: $" + balance;
+        } else {
+            return "Invalid deposit amount. Please enter a positive amount.";
+        }
+    }
+
+    public String withdraw(double Amount) {
+        if (Amount > 0) {
+            if (balance >= Amount) {
+                balance -= Amount;
+                return "Withdrew $" + Amount + ". New balance: $" + balance;
+            } else {
+                return "Insufficient funds.";
+            }
+        } else {
+            return "Invalid withdrawal amount. Please enter a positive amount.";
+        }
+    }
+
+    public static void main(String[] args) {
+        ATM atm = new ATM(10000); 
+        System.out.println("Balance: $" + atm.checkBalance());
+        System.out.println(atm.deposit(5000));
+        System.out.println(atm.withdraw(2000));
+        System.out.println(atm.withdraw(8000));
+    }
+
+    String formatAmount(double currentBalance) {
+        throw new UnsupportedOperationException("Not supported yet."); 
+    }
+}

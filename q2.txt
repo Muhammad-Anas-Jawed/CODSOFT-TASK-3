@@ -1,0 +1,89 @@
+2.	Design the user interface for the ATM, including options such as withdrawing, depositing, and checking the balance. 
+
+public class ATM {
+    private double balance;
+
+    public ATM(double initialBalance) {
+        balance = initialBalance;
+    }
+
+    public double checkBalance() {
+        return balance;
+    }
+
+    public String deposit(double Amount) {
+        if (Amount > 0) {
+            balance += Amount;
+            return "Deposited $" + Amount + ". New balance: $" + balance;
+        } else {
+            return "Invalid deposit amount. Please enter a positive amount.";
+        }
+    }
+
+    public String withdraw(double Amount) {
+        if (Amount > 0) {
+            if (balance >= Amount) {
+                balance -= Amount;
+                return "Withdrew $" + Amount + ". New balance: $" + balance;
+            } else {
+                return "Insufficient funds.";
+            }
+        } else {
+            return "Invalid withdrawal amount. Please enter a positive amount.";
+        }
+    }
+
+    public static void main(String[] args) {
+        ATM atm = new ATM(10000); 
+
+        System.out.println("Balance: $" + atm.checkBalance());
+        System.out.println(atm.deposit(5000));
+        System.out.println(atm.withdraw(2000));
+        System.out.println(atm.withdraw(8000));
+    }
+}
+MAIN CLASS:
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        ATM atm = new ATM(10000); 
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("\nATM Menu:");
+            System.out.println("1. Check Balance");
+            System.out.println("2. Deposit");
+            System.out.println("3. Withdraw");
+            System.out.println("4. Exit");
+            System.out.print("Enter your choice: ");
+
+            int choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    System.out.println("Current Balance: $" + atm.checkBalance());
+                    break;
+                case 2:
+                    System.out.print("Enter the deposit amount: $");
+                    double depositAmount = scanner.nextDouble();
+                    String depositResult = atm.deposit(depositAmount);
+                    System.out.println(depositResult);
+                    break;
+                case 3:
+                    System.out.print("Enter the withdrawal amount: $");
+                    double withdrawAmount = scanner.nextDouble();
+                    String withdrawResult = atm.withdraw(withdrawAmount);
+                    System.out.println(withdrawResult);
+                    break;
+                case 4:
+                    System.out.println("Thank you for using the ATM. Goodbye!");
+                    scanner.close();
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please enter a valid option.");
+            }
+        }
+    }
+}

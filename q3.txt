@@ -1,0 +1,73 @@
+3.	Implement methods for each option, such as withdraw(amount), deposit(amount), and checkBalance(). 
+
+import java.text.DecimalFormat;
+
+public class ATM {
+    private double balance;
+
+    public ATM(double initialBalance) {
+        balance = initialBalance;
+    }
+
+    public double checkBalance() {
+        return balance;
+    }
+
+    public String deposit(double amount) {
+        if (amount > 0) {
+            balance += amount;
+            return "Deposited $" + formatAmount(amount) + ". New balance: $" + formatAmount(balance);
+        } else {
+            return "Invalid deposit amount. Please enter a positive amount.";
+        }
+    }
+
+    public String withdraw(double amount) {
+        if (amount > 0) {
+            if (balance >= amount) {
+                balance -= amount;
+                return "Withdrew $" + formatAmount(amount) + ". New balance: $" + formatAmount(balance);
+            } else {
+                return "Insufficient funds.";
+            }
+        } else {
+            return "Invalid withdrawal amount. Please enter a positive amount.";
+        }
+    }
+
+    String formatAmount(double amount) {
+        DecimalFormat decimalFormat = new DecimalFormat("#0.00");
+        return decimalFormat.format(amount);
+    }
+}
+MAIN:
+public class Main {
+    public static void main(String[] args) {
+      
+        ATM myATM = new ATM(10000.00);
+
+
+        double currentBalance = myATM.checkBalance();
+        System.out.println("Current Balance: $" + myATM.formatAmount(currentBalance));
+
+ 
+        String depositResult = myATM.deposit(5000.50);
+        System.out.println(depositResult);
+
+
+        String withdrawResult = myATM.withdraw(3000.75);
+        System.out.println(withdrawResult);
+
+
+        String insufficientFundsResult = myATM.withdraw(8000.00);
+        System.out.println(insufficientFundsResult);
+
+   
+        String invalidDepositResult = myATM.deposit(-1000.00);
+        System.out.println(invalidDepositResult);
+
+     
+        String invalidWithdrawResult = myATM.withdraw(-500.00);
+        System.out.println(invalidWithdrawResult);
+    }
+}

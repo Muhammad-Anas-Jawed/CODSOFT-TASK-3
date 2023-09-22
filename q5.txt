@@ -1,0 +1,73 @@
+5.	Connect the ATM class with the user's bank account class to access and modify the account balance.
+
+import java.text.DecimalFormat;
+
+public class BankAccount {
+    private double balance;
+
+    public BankAccount(double initialBalance) {
+        balance = initialBalance;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void deposit(double amount) {
+        if (amount > 0) {
+            balance += amount;
+            System.out.println("Deposited $" + formatAmount(amount) + ". New balance: $" + formatAmount(balance));
+        } else {
+            System.out.println("Invalid deposit amount. Please enter a positive amount.");
+        }
+    }
+
+    public void withdraw(double amount) {
+        if (amount > 0) {
+            if (balance >= amount) {
+                balance -= amount;
+                System.out.println("Withdrew $" + formatAmount(amount) + ". New balance: $" + formatAmount(balance));
+            } else {
+                System.out.println("Insufficient funds.");
+            }
+        } else {
+            System.out.println("Invalid withdrawal amount. Please enter a positive amount.");
+        }
+    }
+
+    private String formatAmount(double amount) {
+        return String.format("%.2f", amount);
+    }
+}
+MAIN:
+public class ATM {
+    private BankAccount bankAccount;
+
+    public ATM(BankAccount account) {
+        bankAccount = account;
+    }
+
+    public double checkBalance() {
+        return bankAccount.getBalance();
+    }
+
+    public void deposit(double amount) {
+        bankAccount.deposit(amount);
+    }
+
+    public void withdraw(double amount) {
+        bankAccount.withdraw(amount);
+    }
+
+    public static void main(String[] args) {
+        BankAccount userAccount = new BankAccount(30000); 
+        ATM atm = new ATM(userAccount); 
+
+
+        System.out.println("Balance: $" + atm.checkBalance());
+        atm.deposit(15000);
+        atm.withdraw(20000);
+        atm.withdraw(80000);
+
+    }
+}
